@@ -132,8 +132,8 @@ function CSPSA(f::Function, z₀::Vector, Niters = 200;
     gacc = Array{Complex{Float64}}(undef, Nvars, Niters)
 
     for iter in 1:Niters
-        ak = a / (iter + A)^s
-        bk = b / iter^t
+        ak = a / (iter + 1 + A)^s
+        bk = b / (iter + 1)^t
 
         # Vector of complex perturbations
         Δ = rand(samples, Nvars)
