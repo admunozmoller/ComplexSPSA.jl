@@ -142,6 +142,8 @@ function CSPSA(f::Function, z₀::Vector, Niters = 200;
 
         # Update variable in-place
         @. z += 0.5sign * ak * Δ * df / bk
+        
+        @. z = @. z / LinearAlgebra.norm(@. z)
 
         # Define Gradient
         @. g = 0.5sign * ak * Δ * df / bk
