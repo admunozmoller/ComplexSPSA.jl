@@ -132,8 +132,8 @@ function CSPSA(f::Function, z₀::Vector, Niters = 200;
     gacc = Array{Complex{Float64}}(undef, Nvars, Niters)
 
     for iter in 1:Niters
-        ak = a / (iter + 1 + A)^s
-        bk = b / (iter + 1)^t
+        ak = a / (iter + A)^s
+        bk = b / iter^t
 
         # Vector of complex perturbations
         Δ = rand(samples, Nvars)
@@ -142,8 +142,6 @@ function CSPSA(f::Function, z₀::Vector, Niters = 200;
 
         # Update variable in-place
         @. z += 0.5sign * ak * Δ * df / bk
-        
-        @. z = @. z / LinearAlgebra.norm(@. z)
 
         # Define Gradient
         @. g = 0.5sign * ak * Δ * df / bk
